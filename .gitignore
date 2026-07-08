@@ -340,3 +340,35 @@ scripts/.cache/
 # GitHub files
 .github/
 .gitlab/
+
+# Ignore all tech stack SVGs
+src/assets/techstack/*.svg
+
+# Keep only the icons used in Skills.tsx
+!src/assets/techstack/python.svg
+!src/assets/techstack/Java-Light.svg
+!src/assets/techstack/JavaScript.svg
+!src/assets/techstack/php.svg
+
+!src/assets/techstack/React-Light.svg
+!src/assets/techstack/HTML.svg
+!src/assets/techstack/CSS.svg
+!src/assets/techstack/TypeScript.svg
+!src/assets/techstack/TailwindCSS-Light.svg
+!src/assets/techstack/Bootstrap.svg
+
+!src/assets/techstack/fastapi.svg
+!src/assets/techstack/laravel.svg
+!src/assets/techstack/spring.svg
+
+!src/assets/techstack/scikitlearn.svg
+!src/assets/techstack/TensorFlow-Light.svg
+!src/assets/techstack/numpy.svg
+!src/assets/techstack/pandas.svg
+
+!src/assets/techstack/postgresql.svg
+!src/assets/techstack/mysql.svg
+
+!src/assets/techstack/Docker.svg
+!src/assets/techstack/git.svg
+!src/assets/techstack/Github-Light.svg

@@ -15,8 +15,9 @@ const Contact = lazy(() => import('./pages/Contact'))
 // Lazy load below-the-fold components for better initial load
 const Projects = lazy(() => import('./components/section/Projects'))
 const Experience = lazy(() => import('./components/section/Experience'))
+const Education = lazy(() => import('./components/section/Education'))
 const Skills = lazy(() => import('./components/section/Skills'))
-const Certifications = lazy(() => import('./components/section/Certifications'))
+// const Certifications = lazy(() => import('./components/section/Certifications'))
 const Footer = lazy(() => import('./components/Footer'))
 
 function HomePage() {
@@ -76,8 +77,11 @@ function HomePage() {
       <Suspense fallback={<div className="h-screen flex items-center justify-center">Loading...</div>}>
         <Skills />
       </Suspense>
-      <Suspense fallback={<div className="h-64 flex items-center justify-center">Loading...</div>}>
+      {/* <Suspense fallback={<div className="h-64 flex items-center justify-center">Loading...</div>}>
         <Certifications />
+      </Suspense> */}
+      <Suspense fallback={<div className="h-screen flex items-center justify-center">Loading...</div>}>
+        <Education />
       </Suspense>
     </>
   )

@@ -33,6 +33,19 @@ import TypeScript from './TypeScript.svg';
 import UnityLight from './Unity-Light.svg';
 import VercelLight from './Vercel-Light.svg';
 import ViteLight from './Vite-Light.svg';
+import angular from './angular.svg';
+import fastapi from './fastapi.svg';
+import figma from './figma.svg';
+import git from './git.svg';
+import laravel from './laravel.svg';
+import mysql from './mysql.svg';
+import numpy from './numpy.svg';
+import pandas from './pandas.svg';
+import php from './php.svg';
+import postgresql from './postgresql.svg';
+import python from './python.svg';
+import scikitlearn from './scikitlearn.svg';
+import spring from './spring.svg';
 
 export const techStackIcons = {
   AWSLight,
@@ -69,6 +82,19 @@ export const techStackIcons = {
   UnityLight,
   VercelLight,
   ViteLight,
+  angular,
+  fastapi,
+  figma,
+  git,
+  laravel,
+  mysql,
+  numpy,
+  pandas,
+  php,
+  postgresql,
+  python,
+  scikitlearn,
+  spring,
 };
 
 // Export as array for easier iteration if needed

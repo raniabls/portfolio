@@ -1,30 +1,58 @@
-import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useDarkMode } from '../../contexts/DarkModeContext';
-import { useThemeColors } from '../../hooks/useThemeColors';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { Badge } from '../ui/badge';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
-import { ExternalLink, Code, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
-import { socialLinks } from '../../config/socialLinks';
-import { lightStars, darkStars, specialStars } from '../../assets/stars';
-import { comingSoon } from '../../assets';
+import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useDarkMode } from "../../contexts/DarkModeContext";
+import { useThemeColors } from "../../hooks/useThemeColors";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import { Badge } from "../ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
+import {
+  ExternalLink,
+  Code,
+  Heart,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { socialLinks } from "../../config/socialLinks";
+import { lightStars, darkStars, specialStars } from "../../assets/stars";
+import { comingSoon } from "../../assets";
 
 const Projects = () => {
   const { isDarkMode } = useDarkMode();
   const themeColors = useThemeColors();
 
   // track all the random background stars
-  const [stars, setStars] = useState<Array<{ id: number; x: number; y: number; image: string; isDragging: boolean }>>([]);
+  const [stars, setStars] = useState<
+    Array<{
+      id: number;
+      x: number;
+      y: number;
+      image: string;
+      isDragging: boolean;
+    }>
+  >([]);
   const [draggedStar, setDraggedStar] = useState<number | null>(null);
 
   // the special "drag me" star
-  const [specialStar, setSpecialStar] = useState<{ x: number; y: number }>({ x: 85, y: 8 });
+  const [specialStar, setSpecialStar] = useState<{ x: number; y: number }>({
+    x: 85,
+    y: 8,
+  });
   const [isDraggingSpecial, setIsDraggingSpecial] = useState(false);
 
   // carousel state
   const [currentPage, setCurrentPage] = useState(0);
-  const [direction, setDirection] = useState<'left' | 'right'>('right');
+  const [direction, setDirection] = useState<"left" | "right">("right");
   const projectsPerPage = 4;
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -59,8 +87,12 @@ const Projects = () => {
         id: i,
         x: x,
         y: y,
-        image: (isDarkMode ? darkStars : lightStars)[Math.floor(Math.random() * (isDarkMode ? darkStars : lightStars).length)],
-        isDragging: false
+        image: (isDarkMode ? darkStars : lightStars)[
+          Math.floor(
+            Math.random() * (isDarkMode ? darkStars : lightStars).length,
+          )
+        ],
+        isDragging: false,
       };
     });
     setStars(generatedStars);
@@ -120,17 +152,17 @@ const Projects = () => {
     };
 
     if (isDraggingSpecial) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      document.addEventListener('touchmove', handleTouchMove);
-      document.addEventListener('touchend', handleTouchEnd);
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener("touchmove", handleTouchMove);
+      document.addEventListener("touchend", handleTouchEnd);
     }
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchend", handleTouchEnd);
     };
   }, [isDraggingSpecial]);
 
@@ -139,8 +171,8 @@ const Projects = () => {
     e.stopPropagation();
     setDraggedStar(starId);
     isDraggingRef.current = true;
-    setStars(prevStars =>
-      prevStars.map(s => s.id === starId ? { ...s, isDragging: true } : s)
+    setStars((prevStars) =>
+      prevStars.map((s) => (s.id === starId ? { ...s, isDragging: true } : s)),
     );
   };
 
@@ -148,8 +180,8 @@ const Projects = () => {
     e.stopPropagation();
     setDraggedStar(starId);
     isDraggingRef.current = true;
-    setStars(prevStars =>
-      prevStars.map(s => s.id === starId ? { ...s, isDragging: true } : s)
+    setStars((prevStars) =>
+      prevStars.map((s) => (s.id === starId ? { ...s, isDragging: true } : s)),
     );
   };
 
@@ -164,16 +196,20 @@ const Projects = () => {
         const clampedX = Math.max(0, Math.min(95, x));
         const clampedY = Math.max(0, Math.min(95, y));
 
-        setStars(prevStars =>
-          prevStars.map(s =>
-            s.id === draggedStar ? { ...s, x: clampedX, y: clampedY } : s
-          )
+        setStars((prevStars) =>
+          prevStars.map((s) =>
+            s.id === draggedStar ? { ...s, x: clampedX, y: clampedY } : s,
+          ),
         );
       }
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (draggedStar !== null && containerRef.current && e.touches.length > 0) {
+      if (
+        draggedStar !== null &&
+        containerRef.current &&
+        e.touches.length > 0
+      ) {
         const rect = containerRef.current.getBoundingClientRect();
         const touch = e.touches[0];
         const x = ((touch.clientX - rect.left) / rect.width) * 100;
@@ -183,18 +219,20 @@ const Projects = () => {
         const clampedX = Math.max(0, Math.min(95, x));
         const clampedY = Math.max(0, Math.min(95, y));
 
-        setStars(prevStars =>
-          prevStars.map(s =>
-            s.id === draggedStar ? { ...s, x: clampedX, y: clampedY } : s
-          )
+        setStars((prevStars) =>
+          prevStars.map((s) =>
+            s.id === draggedStar ? { ...s, x: clampedX, y: clampedY } : s,
+          ),
         );
       }
     };
 
     const handleMouseUp = () => {
       if (draggedStar !== null) {
-        setStars(prevStars =>
-          prevStars.map(s => s.id === draggedStar ? { ...s, isDragging: false } : s)
+        setStars((prevStars) =>
+          prevStars.map((s) =>
+            s.id === draggedStar ? { ...s, isDragging: false } : s,
+          ),
         );
         setDraggedStar(null);
         isDraggingRef.current = false;
@@ -203,8 +241,10 @@ const Projects = () => {
 
     const handleTouchEnd = () => {
       if (draggedStar !== null) {
-        setStars(prevStars =>
-          prevStars.map(s => s.id === draggedStar ? { ...s, isDragging: false } : s)
+        setStars((prevStars) =>
+          prevStars.map((s) =>
+            s.id === draggedStar ? { ...s, isDragging: false } : s,
+          ),
         );
         setDraggedStar(null);
         isDraggingRef.current = false;
@@ -212,54 +252,118 @@ const Projects = () => {
     };
 
     if (draggedStar !== null) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      document.addEventListener('touchmove', handleTouchMove);
-      document.addEventListener('touchend', handleTouchEnd);
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener("touchmove", handleTouchMove);
+      document.addEventListener("touchend", handleTouchEnd);
     }
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchend", handleTouchEnd);
     };
   }, [draggedStar]);
 
   // project data - these are the main cards
   const projects = [
     {
-      title: "Project One",
-      description: "A brief description of your first project. Highlight the key features and what makes it unique.",
-      technologies: ["React", "TypeScript", "Node.js", "MongoDB"],
-      icon: comingSoon,
-      detailsUrl: "/projects/project-one",
-      githubUrl: socialLinks.repositories.projectOne
+      title: "VPOS – AI Customer Support Assistant",
+      description:
+        "An intelligent multilingual customer support assistant developed for Djezzy Algeria. The system combines Retrieval-Augmented Generation (RAG), semantic search, SQL retrieval, and large language models to provide accurate answers about mobile offers, services, and FAQs through a modern web interface.",
+      technologies: [
+        "Python",
+        "FastAPI",
+        "React",
+        "TypeScript",
+        "PostgreSQL",
+        "Supabase",
+        "FAISS",
+        "ChromaDB",
+        "Sentence Transformers",
+        "Groq API",
+        "Docker",
+      ],
+      detailsText: "View Thesis",
+      detailsUrl:
+        "https://github.com/raniabls/vpos_test/blob/master/I21_MoulayAbdellah_Belabbas%20(4).pdf",
+      githubUrl: "https://github.com/raniabls/vpos_test",
     },
     {
-      title: "Project Two",
-      description: "A brief description of your second project. Highlight the key features and what makes it unique.",
-      technologies: ["Python", "Flask", "PostgreSQL", "Docker"],
-      icon: comingSoon,
-      detailsUrl: "/projects/project-two",
-      githubUrl: socialLinks.repositories.projectTwo
+      title: "RBAM Importation Platform",
+      description:
+        "A Laravel-based web application developed for Djezzy to streamline the import, management, and visualization of Excel datasets. The platform automates multi-sheet Excel imports into PostgreSQL, provides historical tracking, and offers an intuitive interface for Big Data and Data Warehouse teams.",
+      technologies: [
+        "Laravel",
+        "PHP",
+        "PostgreSQL",
+        "Bootstrap",
+        "JavaScript",
+        "Laravel Excel",
+        "PhpSpreadsheet",
+        "MVC",
+      ],
+      detailsText: "View Thesis",
+      detailsUrl:
+        "https://github.com/raniabls/PFE_Djezzy/blob/main/BelabbasRania_ISIL_L3_m%C3%A9moire.pdf",
+      githubUrl: "https://github.com/raniabls/PFE_Djezzy",
     },
     {
-      title: "Project Three",
-      description: "A brief description of your third project. Highlight the key features and what makes it unique.",
-      technologies: ["JavaScript", "Express", "AWS", "Tailwind CSS"],
-      icon: comingSoon,
-      detailsUrl: "/projects/project-three",
-      githubUrl: socialLinks.repositories.projectThree
+      title: "Audiovisual Content Trends Analysis",
+      description:
+        "A Business Intelligence and Data Warehouse project designed to analyze audiovisual content consumption trends. The system integrates ETL pipelines, OLAP cubes, and interactive Power BI dashboards to transform raw viewing data into actionable insights for decision-making.",
+      technologies: [
+        "Talend",
+        "Power BI",
+        "Pentaho",
+        "MySQL",
+        "ETL",
+        "OLAP",
+        "Data Warehouse",
+        "Star Schema",
+      ],
+      detailsText: "View Report",
+      detailsUrl:
+        "https://github.com/raniabls/DWO_project/blob/main/projet_EDD%20(1).pdf",
+      githubUrl: "https://github.com/raniabls/DWO_project",
     },
     {
-      title: "Project Four",
-      description: "A brief description of your fourth project. Highlight the key features and what makes it unique.",
-      technologies: ["C++", "CMake", "OpenGL"],
-      icon: comingSoon,
-      detailsUrl: "/projects/project-four",
-      githubUrl: socialLinks.repositories.projectFour
-    }
+      title: "Coin Detection & Counting System",
+      description:
+        "Developed a computer vision solution for automatic coin detection, counting, and size-based classification. The application leverages image preprocessing, Otsu thresholding, morphological filtering, and connected component analysis, and provides an intuitive desktop interface for visualizing the complete processing pipeline.",
+      technologies: [
+        "Python",
+        "OpenCV",
+        "NumPy",
+        "Tkinter",
+        "Computer Vision",
+        "Image Processing",
+      ],
+      detailsText: "View Report",
+      detailsUrl:
+        "https://github.com/raniabls/projet_traitement_dimage/blob/master/Rapport.pdf",
+      githubUrl: "https://github.com/raniabls/projet_traitement_dimage",
+    },
+    {
+      title: "Alloy Clustering Analysis",
+      description:
+        "A data mining project focused on clustering metallic alloys based on their chemical composition and thermal properties. The system includes data preprocessing, feature engineering, K-Means clustering, cluster evaluation using the Silhouette Score, and PCA visualization to uncover patterns in alloy datasets.",
+      technologies: [
+        "Python",
+        "Pandas",
+        "NumPy",
+        "Scikit-learn",
+        "K-Means",
+        "PCA",
+        "Data Mining",
+        "Machine Learning",
+      ],
+      detailsText: "View Report",
+      detailsUrl:
+        "https://github.com/raniabls/data_mining_project/blob/main/rapport_projet_tp_DM.pdf",
+      githubUrl: "https://github.com/raniabls/data_mining_project",
+    },
   ];
 
   // Calculate carousel pagination
@@ -272,19 +376,19 @@ const Projects = () => {
   const placeholderCount = projectsPerPage - currentProjects.length;
   const placeholders = Array.from({ length: placeholderCount }, (_, i) => ({
     id: `placeholder-${i}`,
-    isPlaceholder: true
+    isPlaceholder: true,
   }));
 
   const handlePrevPage = () => {
     if (currentPage > 0) {
-      setDirection('left');
+      setDirection("left");
       setCurrentPage((prev) => prev - 1);
     }
   };
 
   const handleNextPage = () => {
     if (currentPage < totalPages - 1) {
-      setDirection('right');
+      setDirection("right");
       setCurrentPage((prev) => prev + 1);
     }
   };
@@ -294,8 +398,10 @@ const Projects = () => {
       id="projects"
       className="py-20 relative transition-colors duration-300"
       style={{
-        background: themeColors.background.sections?.projects || themeColors.background.gradient,
-        transition: 'background 0.3s ease-in-out'
+        background:
+          themeColors.background.sections?.projects ||
+          themeColors.background.gradient,
+        transition: "background 0.3s ease-in-out",
       }}
       ref={containerRef}
     >
@@ -303,11 +409,11 @@ const Projects = () => {
       <div
         className="absolute top-0 left-0 right-0 pointer-events-none"
         style={{
-          height: '150px',
+          height: "150px",
           background: isDarkMode
             ? `linear-gradient(180deg, ${themeColors.background.gradientEnd} 0%, transparent 100%)`
             : `linear-gradient(180deg, ${themeColors.colors.pink[25]} 0%, transparent 100%)`,
-          zIndex: 2
+          zIndex: 2,
         }}
       />
       {/* Special Drag Me Star - Interactive with Click Me arrow */}
@@ -316,24 +422,26 @@ const Projects = () => {
         onMouseDown={handleSpecialStarMouseDown}
         onTouchStart={handleSpecialStarTouchStart}
         style={{
-          position: 'absolute',
+          position: "absolute",
           left: `${specialStar.x}%`,
           top: `${specialStar.y}%`,
-          width: '44px',
-          height: '44px',
+          width: "44px",
+          height: "44px",
           zIndex: 15,
-          cursor: isDraggingSpecial ? 'grabbing' : 'grab',
-          userSelect: 'none',
-          animation: 'twinkle 3s infinite'
+          cursor: isDraggingSpecial ? "grabbing" : "grab",
+          userSelect: "none",
+          animation: "twinkle 3s infinite",
         }}
       >
         <img
-          src={isDarkMode ? specialStars.dragMeStarDark : specialStars.dragMeStar}
+          src={
+            isDarkMode ? specialStars.dragMeStarDark : specialStars.dragMeStar
+          }
           alt="Drag me star"
           style={{
-            width: '100%',
-            height: '100%',
-            pointerEvents: 'none'
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none",
           }}
           draggable={false}
           loading="lazy"
@@ -345,23 +453,23 @@ const Projects = () => {
       {/* Static "drag me!" text with arrow */}
       <div
         style={{
-          position: 'absolute',
-          left: '85%',
-          top: '5%',
+          position: "absolute",
+          left: "85%",
+          top: "5%",
           zIndex: 16,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          pointerEvents: 'none'
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          pointerEvents: "none",
         }}
       >
         <img
           src={isDarkMode ? specialStars.arrowDark : specialStars.arrow}
           alt="Arrow"
           style={{
-            width: '45px',
-            height: '45px',
-            marginLeft: '40px'
+            width: "45px",
+            height: "45px",
+            marginLeft: "40px",
           }}
           draggable={false}
           loading="lazy"
@@ -369,11 +477,11 @@ const Projects = () => {
         <span
           style={{
             fontFamily: "'DK Crayonista', cursive",
-            fontSize: '26px',
-            color: isDarkMode ? '#FDD5DF' : '#ec4899',
-            fontWeight: 'bold',
-            userSelect: 'none',
-            textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+            fontSize: "26px",
+            color: isDarkMode ? "#FDD5DF" : "#ec4899",
+            fontWeight: "bold",
+            userSelect: "none",
+            textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
           }}
         >
           drag me!
@@ -388,23 +496,23 @@ const Projects = () => {
           onMouseDown={handleStarMouseDown(star.id)}
           onTouchStart={handleStarTouchStart(star.id)}
           style={{
-            position: 'absolute',
+            position: "absolute",
             left: `${star.x}%`,
             top: `${star.y}%`,
-            width: '50px',
-            height: '50px',
+            width: "50px",
+            height: "50px",
             zIndex: 1,
-            cursor: star.isDragging ? 'grabbing' : 'grab',
-            userSelect: 'none'
+            cursor: star.isDragging ? "grabbing" : "grab",
+            userSelect: "none",
           }}
         >
           <img
             src={star.image}
             alt="Star"
             style={{
-              width: '100%',
-              height: '100%',
-              pointerEvents: 'none'
+              width: "100%",
+              height: "100%",
+              pointerEvents: "none",
             }}
             draggable={false}
             loading="lazy"
@@ -418,19 +526,32 @@ const Projects = () => {
       <TooltipProvider delayDuration={200}>
         <div className="container mx-auto px-6 relative z-10">
           <div className="flex items-center justify-center gap-1 mb-4">
-            <h2 className="text-4xl font-bold" style={{ color: isDarkMode ? themeColors.colors.white : themeColors.colors.pink[500] }}>Projects</h2>
+            <h2
+              className="text-4xl font-bold"
+              style={{
+                color: isDarkMode
+                  ? themeColors.colors.white
+                  : themeColors.colors.pink[500],
+              }}
+            >
+              Projects
+            </h2>
             <Tooltip>
               <TooltipTrigger asChild>
-                <button 
-                  className="inline-flex items-center justify-center bg-transparent border-none outline-none focus:outline-none" 
-                  style={{ minWidth: '44px', minHeight: '44px' }}
+                <button
+                  className="inline-flex items-center justify-center bg-transparent border-none outline-none focus:outline-none"
+                  style={{ minWidth: "44px", minHeight: "44px" }}
                   aria-label="Information about project icons"
                 >
                   <Heart
                     className="h-5 w-5 cursor-pointer transition-colors"
                     style={{ color: themeColors.primary }}
-                    onMouseEnter={(e) => e.currentTarget.style.color = themeColors.secondary}
-                    onMouseLeave={(e) => e.currentTarget.style.color = themeColors.primary}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.color = themeColors.secondary)
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.color = themeColors.primary)
+                    }
                     fill="none"
                   />
                 </button>
@@ -449,17 +570,22 @@ const Projects = () => {
             key={currentPage}
             className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-8"
             style={{
-              animation: `slideIn${direction === 'right' ? 'Right' : 'Left'} 0.4s ease-out`
+              animation: `slideIn${direction === "right" ? "Right" : "Left"} 0.4s ease-out`,
             }}
           >
             {currentProjects.map((project, index) => (
-              <Card key={index} className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 relative" style={{
-                backgroundColor: themeColors.card.background,
-                border: `1px solid ${themeColors.card.border}`
-              }} aria-label={`${project.title} project`}>
+              <Card
+                key={index}
+                className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 relative"
+                style={{
+                  backgroundColor: themeColors.card.background,
+                  border: `1px solid ${themeColors.card.border}`,
+                }}
+                aria-label={`${project.title} project`}
+              >
                 <CardHeader>
                   <div className="flex items-start gap-3">
-                    {project.icon && (
+                    {/* {project.icon && (
                       <img
                         src={project.icon}
                         alt={`${project.title} icon`}
@@ -468,7 +594,7 @@ const Projects = () => {
                         width="48"
                         height="48"
                       />
-                    )}
+                    )} */}
                     <div className="flex-1">
                       <CardTitle className="text-xl dark:text-gray-100 transition-colors group-hover:!text-pink-500 dark:group-hover:!text-pink-400">
                         {project.title}
@@ -479,26 +605,50 @@ const Projects = () => {
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent style={{ display: 'flex', flexDirection: 'column' }}>
-                  <div className="flex flex-wrap gap-2 mb-4" style={{ flex: '1 0 auto' }}>
+                <CardContent
+                  style={{ display: "flex", flexDirection: "column" }}
+                >
+                  <div
+                    className="flex flex-wrap gap-2 mb-4"
+                    style={{ flex: "1 0 auto" }}
+                  >
                     {project.technologies.map((tech, techIndex) => (
-                      <Badge key={techIndex} variant="secondary" className="text-xs"
+                      <Badge
+                        key={techIndex}
+                        variant="secondary"
+                        className="text-xs"
                         style={{
                           backgroundColor: themeColors.interactive.primary,
                           color: themeColors.text.accent,
                           borderColor: themeColors.primary,
-                          border: '1px solid'
-                        }}>
+                          border: "1px solid",
+                        }}
+                      >
                         {tech}
                       </Badge>
                     ))}
                   </div>
-                  <div className="flex gap-3" style={{ marginTop: 'auto', paddingTop: '8px' }}>
-                    <Link to={project.detailsUrl} className="project-btn flex items-center gap-1" style={{ textDecoration: 'none', color: 'white' }} aria-label={`View ${project.title} project details`}>
+                  <div
+                    className="flex gap-3"
+                    style={{ marginTop: "auto", paddingTop: "8px" }}
+                  >
+                    <Link
+                      to={project.detailsUrl}
+                      className="project-btn flex items-center gap-1"
+                      style={{ textDecoration: "none", color: "white" }}
+                      aria-label={`View ${project.title} project details`}
+                    >
                       <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                      Details
+                      {project.detailsText ?? "Details"}
                     </Link>
-                    <a href={project.githubUrl} className="project-btn-outline flex items-center gap-1" style={{ textDecoration: 'none' }} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} source code on GitHub`}>
+                    <a
+                      href={project.githubUrl}
+                      className="project-btn-outline flex items-center gap-1"
+                      style={{ textDecoration: "none" }}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`View ${project.title} source code on GitHub`}
+                    >
                       <Code className="h-4 w-4" aria-hidden="true" />
                       Code
                     </a>
@@ -509,49 +659,80 @@ const Projects = () => {
 
             {/* Placeholder "Coming Soon" cards */}
             {placeholders.map((placeholder) => (
-              <Card key={placeholder.id} className="group relative" style={{
-                backgroundColor: themeColors.card.background,
-                border: `1px dashed ${themeColors.card.border}`,
-                opacity: 0.5
-              }} aria-label="Coming soon project">
+              <Card
+                key={placeholder.id}
+                className="group relative"
+                style={{
+                  backgroundColor: themeColors.card.background,
+                  border: `1px dashed ${themeColors.card.border}`,
+                  opacity: 0.5,
+                }}
+                aria-label="Coming soon project"
+              >
                 <CardHeader>
                   <div className="flex items-start gap-3">
-                    <img
+                    {/* <img
                       src={comingSoon}
                       alt="Coming soon"
                       className="w-12 h-12 rounded-lg object-cover opacity-60"
                       loading="lazy"
                       width="48"
                       height="48"
-                    />
+                    /> */}
                     <div className="flex-1">
-                      <CardTitle className="text-xl" style={{ color: isDarkMode ? themeColors.colors.white : themeColors.colors.dark[600] }}>
+                      <CardTitle
+                        className="text-xl"
+                        style={{
+                          color: isDarkMode
+                            ? themeColors.colors.white
+                            : themeColors.colors.dark[600],
+                        }}
+                      >
                         Coming Soon
                       </CardTitle>
                       <CardDescription className="text-gray-600 dark:text-gray-300 mt-2">
-                        More exciting projects on the way! Check back soon to see what I'm working on next.
+                        More exciting projects on the way! Check back soon to
+                        see what I'm working on next.
                       </CardDescription>
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent style={{ display: 'flex', flexDirection: 'column' }}>
-                  <div className="flex flex-wrap gap-2 mb-4" style={{ flex: '1 0 auto' }}>
-                    <Badge variant="secondary" className="text-xs" style={{
-                      backgroundColor: themeColors.interactive.primary,
-                      color: themeColors.text.accent,
-                      borderColor: themeColors.primary,
-                      border: '1px solid',
-                      opacity: 0.5
-                    }}>
+                <CardContent
+                  style={{ display: "flex", flexDirection: "column" }}
+                >
+                  <div
+                    className="flex flex-wrap gap-2 mb-4"
+                    style={{ flex: "1 0 auto" }}
+                  >
+                    <Badge
+                      variant="secondary"
+                      className="text-xs"
+                      style={{
+                        backgroundColor: themeColors.interactive.primary,
+                        color: themeColors.text.accent,
+                        borderColor: themeColors.primary,
+                        border: "1px solid",
+                        opacity: 0.5,
+                      }}
+                    >
                       TBA
                     </Badge>
                   </div>
-                  <div className="flex gap-3 opacity-30" style={{ marginTop: 'auto', paddingTop: '8px' }}>
-                    <div className="project-btn flex items-center gap-1" style={{ pointerEvents: 'none' }}>
+                  <div
+                    className="flex gap-3 opacity-30"
+                    style={{ marginTop: "auto", paddingTop: "8px" }}
+                  >
+                    <div
+                      className="project-btn flex items-center gap-1"
+                      style={{ pointerEvents: "none" }}
+                    >
                       <ExternalLink className="h-4 w-4" aria-hidden="true" />
                       Details
                     </div>
-                    <div className="project-btn-outline flex items-center gap-1" style={{ pointerEvents: 'none' }}>
+                    <div
+                      className="project-btn-outline flex items-center gap-1"
+                      style={{ pointerEvents: "none" }}
+                    >
                       <Code className="h-4 w-4" aria-hidden="true" />
                       Code
                     </div>
@@ -562,27 +743,32 @@ const Projects = () => {
           </div>
 
           {/* Carousel navigation - subtle dots at bottom */}
-          <div className="flex items-center justify-center gap-3 mt-4 relative z-10" style={{ minHeight: '32px' }}>
+          <div
+            className="flex items-center justify-center gap-6 mt-4 relative z-10"
+            style={{ minHeight: "32px" }}
+          >
             <button
               onClick={handlePrevPage}
               disabled={currentPage === 0}
               className="transition-all duration-200 hover:scale-110"
               style={{
-                color: isDarkMode ? themeColors.colors.pink[300] : themeColors.colors.pink[400],
+                color: isDarkMode
+                  ? themeColors.colors.pink[300]
+                  : themeColors.colors.pink[400],
                 opacity: currentPage === 0 ? 0.2 : 0.6,
-                cursor: currentPage === 0 ? 'not-allowed' : 'pointer',
-                background: 'none',
-                border: 'none',
-                padding: '4px',
-                minWidth: '28px',
-                minHeight: '28px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
+                cursor: currentPage === 0 ? "not-allowed" : "pointer",
+                background: "none",
+                border: "none",
+                padding: "4px",
+                minWidth: "28px",
+                minHeight: "28px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
               aria-label="Previous projects"
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft className="h-8 w-8" />
             </button>
 
             {/* Page dots */}
@@ -592,22 +778,27 @@ const Projects = () => {
                   key={i}
                   onClick={() => {
                     if (i !== currentPage) {
-                      setDirection(i > currentPage ? 'right' : 'left');
+                      setDirection(i > currentPage ? "right" : "left");
                       setCurrentPage(i);
                     }
                   }}
                   className="transition-all duration-200"
                   style={{
-                    width: currentPage === i ? '24px' : '8px',
-                    height: '8px',
-                    borderRadius: '4px',
-                    backgroundColor: currentPage === i
-                      ? (isDarkMode ? themeColors.colors.pink[300] : themeColors.colors.pink[400])
-                      : (isDarkMode ? themeColors.colors.pink[300] : themeColors.colors.pink[400]),
+                    width: currentPage === i ? "40px" : "14px",
+                    height: "8px",
+                    borderRadius: "999px",
+                    backgroundColor:
+                      currentPage === i
+                        ? isDarkMode
+                          ? themeColors.colors.pink[300]
+                          : themeColors.colors.pink[400]
+                        : isDarkMode
+                          ? themeColors.colors.pink[300]
+                          : themeColors.colors.pink[400],
                     opacity: currentPage === i ? 1 : 0.3,
-                    cursor: 'pointer',
-                    border: 'none',
-                    padding: 0
+                    cursor: "pointer",
+                    border: "none",
+                    padding: 0,
                   }}
                   aria-label={`Go to page ${i + 1}`}
                 />
@@ -619,35 +810,38 @@ const Projects = () => {
               disabled={currentPage === totalPages - 1}
               className="transition-all duration-200 hover:scale-110"
               style={{
-                color: isDarkMode ? themeColors.colors.pink[300] : themeColors.colors.pink[400],
+                color: isDarkMode
+                  ? themeColors.colors.pink[300]
+                  : themeColors.colors.pink[400],
                 opacity: currentPage === totalPages - 1 ? 0.2 : 0.6,
-                cursor: currentPage === totalPages - 1 ? 'not-allowed' : 'pointer',
-                background: 'none',
-                border: 'none',
-                padding: '4px',
-                minWidth: '28px',
-                minHeight: '28px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
+                cursor:
+                  currentPage === totalPages - 1 ? "not-allowed" : "pointer",
+                background: "none",
+                border: "none",
+                padding: "4px",
+                minWidth: "28px",
+                minHeight: "28px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
               aria-label="Next projects"
             >
-              <ChevronRight className="h-5 w-5" />
+              <ChevronRight className="h-8 w-8" />
             </button>
           </div>
         </div>
       </TooltipProvider>
-      
+
       {/* Gradient overlay for smooth transition to next section */}
       <div
         className="absolute bottom-0 left-0 right-0 pointer-events-none"
         style={{
-          height: '150px',
+          height: "150px",
           background: isDarkMode
             ? `linear-gradient(180deg, transparent 0%, ${themeColors.background.gradientEnd} 100%)`
             : `linear-gradient(180deg, transparent 0%, ${themeColors.colors.pink[25]} 100%)`,
-          zIndex: 1
+          zIndex: 1,
         }}
       />
     </section>
