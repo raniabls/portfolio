@@ -51,7 +51,7 @@ const Education = () => {
           {education.map((item, index) => (
             <div
               key={index}
-              className="rounded-3xl px-6 py-5 transition-all duration-300 hover:-translate-y-1"
+              className="rounded-3xl px-5 sm:px-6 py-6 transition-all duration-300 hover:-translate-y-1"
               style={{
                 background: isDarkMode
                   ? "rgba(30,41,59,.55)"
@@ -65,22 +65,24 @@ const Education = () => {
                 boxShadow: "0 10px 35px rgba(0,0,0,.08)",
               }}
             >
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-5 sm:gap-4">
+                {/* Icon */}
                 <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center shrink-0"
+                  className="w-16 h-16 rounded-full flex items-center justify-center shrink-0 mx-auto sm:mx-0"
                   style={{
                     background: themeColors.colors.pink[100],
                   }}
                 >
                   <GraduationCap
-                    size={26}
+                    size={30}
                     color={themeColors.colors.pink[500]}
                   />
                 </div>
 
-                <div className="flex-1">
+                {/* Content */}
+                <div className="flex-1 text-center sm:text-left">
                   <h3
-                    className="text-2xl font-bold mb-1"
+                    className="text-xl sm:text-2xl font-bold mb-2 leading-tight"
                     style={{
                       color: isDarkMode
                         ? themeColors.colors.white
@@ -91,7 +93,7 @@ const Education = () => {
                   </h3>
 
                   <h4
-                    className="text-lg font-semibold mb-2"
+                    className="text-base sm:text-lg font-semibold mb-3"
                     style={{
                       color: isDarkMode
                         ? themeColors.colors.pink[300]
@@ -101,7 +103,7 @@ const Education = () => {
                     {item.school}
                   </h4>
 
-                  <div className="flex flex-wrap gap-4 mb-3">
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 mb-5 items-center sm:items-start justify-center sm:justify-start">
                     <div
                       className="flex items-center gap-2"
                       style={{
@@ -128,7 +130,7 @@ const Education = () => {
                   </div>
 
                   <p
-                    className="leading-6"
+                    className="leading-7 text-[15px] sm:text-base"
                     style={{
                       color: isDarkMode
                         ? themeColors.colors.dark[200]

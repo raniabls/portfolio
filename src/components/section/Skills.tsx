@@ -148,8 +148,8 @@ const Skills = () => {
           ref={domeContainerRef}
           className="relative w-full"
           style={{
-            height: "600px",
-            transform: `scale(${scale})`,
+            height: window.innerWidth < 640 ? "300px" : "600px",
+            transform: `scale(${window.innerWidth < 640 ? scale * 0.55 : scale})`,
             transformOrigin: "center center",
             willChange: "transform",
           }}
