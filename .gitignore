@@ -372,3 +372,7 @@ src/assets/techstack/*.svg
 !src/assets/techstack/Docker.svg
 !src/assets/techstack/git.svg
 !src/assets/techstack/Github-Light.svg
+!src/assets/techstack/angular.svg
+!src/assets/techstack/figma.svg
+!src/assets/techstack/Flutter-Light.svg
+!src/assets/techstack/LaTeX-Light.svg
