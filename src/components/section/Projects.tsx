@@ -23,9 +23,9 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { socialLinks } from "../../config/socialLinks";
+// import { socialLinks } from "../../config/socialLinks";
 import { lightStars, darkStars, specialStars } from "../../assets/stars";
-import { comingSoon } from "../../assets";
+// import { comingSoon } from "../../assets";
 
 const Projects = () => {
   const { isDarkMode } = useDarkMode();

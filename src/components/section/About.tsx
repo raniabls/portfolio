@@ -16,7 +16,7 @@ import {
 
 const About = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [asciiText, setAsciiText] = useState("");
+  // const [asciiText, setAsciiText] = useState("");
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -36,42 +36,42 @@ const About = () => {
     { src: profile3, caption: "photo 3" },
   ];
 
-  const fullAsciiArt = `
-SELECT *
+//   const fullAsciiArt = `
+// SELECT *
 
-FROM engineer
+// FROM engineer
 
-WHERE name = 'Rania BELABBAS'
+// WHERE name = 'Rania BELABBAS'
 
-AND expertise IN (
+// AND expertise IN (
 
-  'Artificial Intelligence',
-  'Machine Learning',
-  'Data Science',
-);
-`;
+//   'Artificial Intelligence',
+//   'Machine Learning',
+//   'Data Science',
+// );
+// `;
 
   // Typewriter effect for ASCII art
-  useEffect(() => {
-    let currentIndex = 0;
-    const typingSpeed = 3; // Speed in milliseconds
+  // useEffect(() => {
+  //   let currentIndex = 0;
+  //   const typingSpeed = 3; // Speed in milliseconds
 
-    const typeWriter = () => {
-      if (currentIndex < fullAsciiArt.length) {
-        setAsciiText(fullAsciiArt.substring(0, currentIndex + 1));
-        currentIndex++;
-        setTimeout(typeWriter, typingSpeed);
-      }
-    };
+  //   const typeWriter = () => {
+  //     if (currentIndex < fullAsciiArt.length) {
+  //       setAsciiText(fullAsciiArt.substring(0, currentIndex + 1));
+  //       currentIndex++;
+  //       setTimeout(typeWriter, typingSpeed);
+  //     }
+  //   };
 
-    // Start typing after a small delay
-    const startDelay = setTimeout(() => {
-      typeWriter();
-    }, 500);
+  //   // Start typing after a small delay
+  //   const startDelay = setTimeout(() => {
+  //     typeWriter();
+  //   }, 500);
 
-    return () => clearTimeout(startDelay);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only run once on mount
+  //   return () => clearTimeout(startDelay);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []); // Only run once on mount
 
   useEffect(() => {
     let ticking = false;
