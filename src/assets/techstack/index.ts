@@ -22,6 +22,10 @@ import postgresql from "./postgresql.svg";
 import python from "./python.svg";
 import scikitlearn from "./scikitlearn.svg";
 import spring from "./spring.svg";
+import angular from "./angular.svg";
+import figma from "./figma.svg";
+import FlutterLight from "./Flutter-Light.svg";
+import LaTeXLight from "./LaTeX-Light.svg";
 
 export const techStackIcons = {
   Bootstrap,
@@ -46,12 +50,18 @@ export const techStackIcons = {
   python,
   scikitlearn,
   spring,
+  FlutterLight,
+  LaTeXLight,
+  angular,
+  figma,
 };
 
 // Export as array for easier iteration if needed
-export const techStackArray = Object.entries(techStackIcons).map(([name, icon]) => ({
-  name,
-  icon,
-}));
+export const techStackArray = Object.entries(techStackIcons).map(
+  ([name, icon]) => ({
+    name,
+    icon,
+  }),
+);
 
 export default techStackIcons;
